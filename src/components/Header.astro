@@ -1,0 +1,29 @@
+---
+import '../styles/theme.css';
+interface Props {
+    style?: 'black',
+}
+---
+<h1 class={Astro.props.style}><slot></slot></h1>
+<style>
+    h1 {
+        font-family: var(--font-heading), sans-serif;
+        color: var(--text-50);
+        margin: 0;
+        max-width: min(50ch, 90vw);
+        & :global(em) {
+            font-style: normal;
+            color: var(--primary-300);
+        }
+        & :global(em) > :global(em) {
+            color: var(--secondary-300);
+        }
+    }
+    h1.black {
+        color: var(--text-950);
+        & :global(em) {
+            font-weight: 700;
+            color: var(--text-950);
+        }
+    }
+</style>

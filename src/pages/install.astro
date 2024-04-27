@@ -1,0 +1,206 @@
+---
+import Button from "../components/Button.astro";
+import Gap from "../components/Gap.astro";
+import Header from "../components/Header.astro";
+import Icon from "../components/Icon.astro";
+import Image from "../components/Image.astro";
+import Paragraph from "../components/Paragraph.astro";
+import Row from "../components/Row.astro";
+import Title from "../components/Title.astro";
+import Waves from "../components/Waves.astro";
+import Base from "../layouts/Base.astro";
+import mainMenuImage from "../images/main-menu.png";
+import geodeMenuImage from "../images/main-page.png";
+import downloadMenuImage from "../images/download-page.png";
+import Column from "../components/Column.astro";
+import FlyIntoView from "../components/FlyIntoView.astro";
+import IconLink from "../components/IconLink.astro";
+import Box from "../components/Box.astro";
+import Rollover from "../components/Rollover.astro";
+import Loading from "../components/Loading.astro";
+---
+<Base>
+	<Waves anchor="top" height="38rem" push="14rem"/>
+    <Gap size="large"/>
+    <Title>Install Geode</Title>
+    <span class="install-grid">
+        <Loading loading="Loading versions" id="install">
+            <Column>
+                <Paragraph>Latest version: <em id="latest-version"></em></Paragraph>
+                <Column align="stretch">
+                    <Button type="primary filled" id="install-windows">
+                        <Icon type="windows"/>Download for Windows
+                    </Button>
+                    <Button type="primary filled" id="install-mac">
+                        <Icon type="mac"/>Download for Mac
+                    </Button>
+                    <Button type="primary filled" id="install-linux">
+                        <Icon type="linux"/>Download for Linux
+                    </Button>
+                    <Button type="primary filled" id="install-android64">
+                        <Icon type="android"/>Download for Android (64-bit)
+                    </Button>
+                    <Button type="primary filled" id="install-android32">
+                        <Icon type="android"/>Download for Android (32-bit)
+                    </Button>
+                    <Button type="primary filled" id="install-ios">
+                        <Icon type="ios"/>Download for iOS
+                    </Button>
+                    <Rollover title="Show other platforms" id="other-platforms">
+                        <Column align="left">
+                            <IconLink id="other-windows"><Icon type="windows"/>Windows</IconLink>
+                            <IconLink id="other-mac"><Icon type="mac"/>Mac</IconLink>
+                            <IconLink id="other-linux"><Icon type="linux"/>Linux</IconLink>
+                            <IconLink id="other-android64"><Icon type="android"/>Android (64-bit)</IconLink>
+                            <IconLink id="other-android32"><Icon type="android"/>Android (32-bit)</IconLink>
+                            <IconLink id="other-ios"><Icon type="ios"/>iOS</IconLink>
+                        </Column>
+                    </Rollover>
+                </Column>
+            </Column>
+        </Loading>
+        <Column align="left">
+            <Paragraph><strong>Installation instructions</strong></Paragraph>
+            <span style={{ color: 'var(--background-300)' }}>
+                <Column align="left">
+                    <Row>
+                        <Icon type="one"/>
+                        <Paragraph>Download the <em>installer</em> for the platform you want.</Paragraph>
+                    </Row>
+                    <Row>
+                        <Icon type="two"/>
+                        <Paragraph>Run the installer.</Paragraph>
+                    </Row>
+                </Column>
+            </span>
+            <Gap/>
+            <Paragraph>
+                Geode is available for <em>Windows</em>, <em>MacOS</em>, <em>Android</em>, and <em>iOS</em>. 
+            </Paragraph>
+            <Box type="warning">
+                <em>iOS</em> support for Geode requires a <em>jailbroken device</em>.
+            </Box>
+        </Column>
+    </span>
+    <Gap size="large"/>
+    <Header>How to install mods?</Header>
+    <FlyIntoView>
+        <Image
+            src={mainMenuImage}
+            alt="Screenshot of the main menu in Geometry Dash, showing a new Geode button at the bottom"
+            style="glow"
+        />
+        <Column align="left" gap="large">
+            <Paragraph>
+                Once you have <em>installed Geode</em>, you should see a new button in the bottom row 
+                of the main menu.
+                <br><br>
+                Clicking this button brings you to the <em>Geode Menu</em>.
+            </Paragraph>
+            <Row>
+                <Button href="/faq#i-cant-see-the-geode-button">
+                    <Icon type="help"/>I can't see the Geode button!
+                </Button>
+            </Row>
+        </Column>
+    </FlyIntoView>
+    <FlyIntoView>
+        <Image
+            src={geodeMenuImage}
+            alt="Screenshot of the Geode menu in Geometry Dash, showing a selection of installed mods"
+            style="glow"
+        />
+        <Column align="left" gap="large">
+            <Paragraph>
+                The first page you see is the <em>list of mods you currently have installed</em>. 
+                Use the toggles to quickly <em>enable/disable</em> any mods, or click <em>View</em> for 
+                further options like editing mod settings and uninstalling.
+            </Paragraph>
+            <Row wrap={true}>
+                <Button href="/faq">
+                    <Icon type="help"/>How do I change Mod settings?
+                </Button>
+                <Button href="/faq">
+                    <Icon type="help"/>How do I update Mods?
+                </Button>
+                <Button href="/faq">
+                    <Icon type="help"/>How do I uninstall Mods?
+                </Button>
+            </Row>
+        </Column>
+    </FlyIntoView>
+    <FlyIntoView>
+        <Image
+            src={downloadMenuImage}
+            alt="Screenshot of the Geode Download menu in Geometry Dash, showing a selection of available mods for downloading"
+            style="glow"
+        />
+        <Column align="left" gap="large">
+            <Paragraph>
+                The other pages - <em>Recommended</em>, <em>Download</em>, and <em>Trending</em> are dedicated 
+                to finding new mods.
+                <br><br>
+                You can use the <em>search button</em> on the left to search for specific 
+                mods by name or by <em>tags</em>.
+            </Paragraph>
+            <Row wrap={true}>
+                <Button href="/faq">
+                    <Icon type="help"/>Why can't I find a certain Mod?
+                </Button>
+            </Row>
+        </Column>
+    </FlyIntoView>
+</Base>
+
+<script>
+    /// <reference types="user-agent-data-types" />
+
+    type DetectedPlatform = 'windows' | 'mac' | 'android' | 'ios';
+    const platform = (navigator?.userAgentData?.platform ?? navigator?.platform ?? '').toLowerCase();
+    let detectedPlatform: DetectedPlatform | undefined;
+    if (platform.includes('windows') || platform.includes('win32')) {
+        detectedPlatform = 'windows';
+    }
+    else if (platform.includes('iphone')) {
+        detectedPlatform = 'ios';
+    }
+    else if (platform.includes('macintosh')) {
+        detectedPlatform = 'mac';
+    }
+    else if (platform.includes('android')) {
+        detectedPlatform = 'android';
+    }
+
+    const installLoad = document.querySelector('#install')!;
+
+    // todo: when server endpoint for getting latest version is implemented, use fetch() to get that
+
+    setTimeout(() => {
+        installLoad.dispatchEvent(new CustomEvent('loading-finish', {
+            detail: {
+                '#latest-version': ver => {
+                    (ver as HTMLElement).innerText = 'yippee';
+                },
+                '[id*="install-"]': btn => {
+                    if (detectedPlatform) {
+                        if (!btn.getAttribute('id')?.includes(detectedPlatform)) {
+                            btn.classList.add('hidden');
+                        }
+                    }
+                },
+                '#other-platforms': list => {
+                    list.classList.toggle('hidden', !detectedPlatform);
+                },
+            } as FinishEventDetail
+        }))
+    }, 2000);
+</script>
+
+<style>
+    .install-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        max-width: min(80ch, 90vw);
+    }
+</style>

@@ -1,12 +1,20 @@
 ---
 import '../styles/theme.css';
 import { prefixURL } from '../URLPrefixer';
-interface Props {
-    href: string,
+interface BaseProps {
     type?: string,
 }
+interface HrefProps extends BaseProps {
+    href: string,
+    id?: string,
+}
+interface IdProps extends BaseProps {
+    href?: string,
+    id: string,
+}
+type Props = HrefProps | IdProps;
 ---
-<a href={prefixURL(Astro.props.href ?? '')} class:list={[Astro.props.type]}><slot/></a>
+<a href={prefixURL(Astro.props.href ?? '')} class:list={[Astro.props.type]} id={Astro.props.id}><slot/></a>
 <style>
     a {
         font-family: var(--font-body);

@@ -1,12 +1,11 @@
 ---
 interface Props {
     anchor?: 'top' | 'bottom',
-    size?: 'full' | 'few',
+    push?: string,
+    size?: 'full' | 'few' | 'very-few',
     height?: string,
 }
-import svgFull from "../images/waves.svg?raw";
-import svgFew from "../images/waves-few.svg?raw";
-const svg = Astro.props.size === 'few' ? svgFew : svgFull;
+const { default: svg } = await import(`../images/waves-${Astro.props.size ?? 'full'}.svg?raw`);
 ---
 <span class:list={[Astro.props.anchor ?? 'block', 'waves']}><Fragment set:html={svg} /></span>
 <script>
@@ -15,7 +14,7 @@ const svg = Astro.props.size === 'few' ? svgFew : svgFull;
     //     topWaves.style.top = `-${window.scrollY / 5}px`;
     // });
 </script>
-<style lang="scss" define:vars={{ height: Astro.props.height ?? '65rem' }}>
+<style lang="scss" define:vars={{ height: Astro.props.height ?? '65rem', push: Astro.props.push ?? '0px' }}>
     span {
         position: absolute;
         display: block;
@@ -38,7 +37,7 @@ const svg = Astro.props.size === 'few' ? svgFew : svgFull;
         }
     }
     span.top {
-        top: 0px;
+        top: calc(0px - var(--push));
         & :global(svg) {
             rotate: 180deg;
         }

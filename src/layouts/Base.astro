@@ -1,5 +1,19 @@
 ---
+import Icon from '../components/Icon.astro';
+import Column from '../components/Column.astro';
+import DotSeparator from '../components/DotSeparator.astro';
+import Gap from '../components/Gap.astro';
+import IconLink from '../components/IconLink.astro';
+import Link from '../components/Link.astro';
+import Paragraph from '../components/Paragraph.astro';
+import Row from '../components/Row.astro';
+import Waves from '../components/Waves.astro';
 import '../styles/theme.css';
+import Button from '../components/Button.astro';
+
+interface Props {
+	main?: boolean,
+}
 ---
 
 <html lang="en">
@@ -11,19 +25,64 @@ import '../styles/theme.css';
 		<title>Geode - Mods for Geometry Dash</title>
 	</head>
 	<body>
+		{!Astro.props.main && 
+			<nav>
+				<Button href=".." type="primary-black filled"><Icon type="home"/>Home</Button>
+			</nav>
+		}
         <slot></slot>
+		<Gap size="immense"/>
+		<Column>
+			<Row>
+				<IconLink href="https://discord.gg/9e43WMKzhp" style="subtitle black">
+					<Icon type="discord" size="small"/>Discord
+				</IconLink>
+				<DotSeparator style="black"/>
+				<IconLink href="https://twitter.com/geode_sdk" style="subtitle black">
+					<Icon type="twitter" size="small"/>Twitter
+				</IconLink>
+				<DotSeparator style="black"/>
+				<IconLink href="https://docs.geode-sdk.org/" style="subtitle black">
+					<Icon type="docs" size="small"/>Documentation
+				</IconLink>
+				<DotSeparator style="black"/>
+				<IconLink href="https://github.com/geode-sdk" style="subtitle black">
+					<Icon type="github" size="small"/>Source Code
+				</IconLink>
+			</Row>
+			<Paragraph style="black">
+				Site made by <Link href="https://github.com/hjfod" style="black">HJfod</Link>.
+				Thank you to <Link href="https://github.com/nekitdev" style="black">Nekit</Link> for the domain!
+			</Paragraph>
+			<Row gap="small">
+				<Icon type="copyright"/> 
+				<Paragraph style="black">Geode Team 2024</Paragraph>
+			</Row>
+		</Column>
+		<Waves height="35rem" size="few"/>
 	</body>
 </html>
 
-<style>
+<style define:vars={{ 'bg-bright-color': Astro.props.main ? 'var(--background-700)' : 'var(--background-800)' }}>
 	body {
 		padding: 0;
 		margin: var(--page-margin);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		background: linear-gradient(to bottom, var(--background-700), var(--background-900));
+		background: linear-gradient(to bottom, var(--bg-bright-color), var(--background-900));
+		min-height: calc(100vh - var(--page-margin) * 2);
         gap: var(--gap-large);
 		font-family: var(--font-body);
+	}
+	nav {
+		position: fixed;
+		left: 1rem;
+		top: 1rem;
+	}
+</style>
+<style is:global>	
+	.hidden {
+		display: none !important;
 	}
 </style>

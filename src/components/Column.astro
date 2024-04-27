@@ -1,15 +1,23 @@
 ---
 import '../styles/theme.css';
+const alignment = {
+    'left':   'start',
+    'center': 'center',
+    'right':  'end',
+    'stretch':'stretch',
+};
 interface Props {
-    gap?: 'small' | 'normal' | 'large' | 'immense';
+    gap?: 'small' | 'normal' | 'large' | 'immense',
+    align?: keyof typeof alignment,
+    id?: string,
 }
 ---
-<div><slot></slot></div>
-<style define:vars={{ gap: `var(--gap-${Astro.props.gap ?? 'normal'})` }}>
+<div id={Astro.props.id}><slot></slot></div>
+<style define:vars={{ gap: `var(--gap-${Astro.props.gap ?? 'normal'})`, align: alignment[Astro.props.align ?? 'center'] }}>
     div {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: var(--align);
         gap: var(--gap);
     }
 </style>

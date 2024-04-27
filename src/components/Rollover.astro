@@ -1,0 +1,71 @@
+---
+import Icon from './Icon.astro'
+interface Props {
+    title: string,
+    id?: string,
+}
+---
+<details id={Astro.props.id}>
+    <summary><Icon type="down"/> {Astro.props.title}</summary>
+    <article><slot></slot></article>
+</details>
+<script>
+    document.querySelectorAll('details').forEach(details => {
+        details.addEventListener('toggle', e => {
+            setTimeout(() => details.classList.toggle('open', details.open), 50);
+        });
+    });
+</script>
+<style>
+    details {
+        padding: .5rem;
+        border-radius: .5rem;
+        transition: all 300ms;
+        
+        & > summary {
+            color: var(--secondary-300);
+            text-decoration: none;
+            
+            transition-property: color text-decoration;
+            transition-duration: 300ms;
+            
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            gap: .5rem;
+            padding: .5rem;
+            padding-top: .2rem;
+
+            cursor: pointer;
+
+            &:hover {
+                color: var(--secondary-50);
+                text-decoration: underline;
+            }
+            & > :global(svg) {
+                transition: all 150ms;
+            }
+        }
+        & > article {
+            opacity: 0%;
+            transform-origin: top;
+            transform: scale(0%);
+            transition-property: opacity transform;
+            transition-duration: 300ms;
+            padding: .5rem;
+        }
+    }
+    details.open {
+        background-color: color-mix(in srgb, var(--background-300) 10%, transparent);
+        & > summary {
+            border-bottom: .1rem color-mix(in srgb, var(--secondary-300) 25%, transparent) solid;
+            & > :global(svg) {
+                rotate: -180deg;
+            }
+        }
+    }
+    details.open > article {
+        opacity: 100%;
+        transform: scale(100%);
+    }
+</style>
