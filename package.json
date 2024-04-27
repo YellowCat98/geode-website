@@ -1,0 +1,27 @@
+{
+  "name": "geode-sdk-website",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.5.10",
+    "astro": "^4.7.0",
+    "astro-icon": "^1.1.0",
+    "countup.js": "^2.8.0"
+  },
+  "devDependencies": {
+    "@iconify-json/arcticons": "^1.1.102",
+    "@iconify-json/mdi": "^1.1.66",
+    "@iconify-json/simple-icons": "^1.1.100",
+    "highlight.js": "^11.9.0",
+    "sass": "^1.75.0",
+    "strip-indent": "^4.0.0",
+    "typescript": "^5.4.5"
+  }
+}

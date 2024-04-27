@@ -1,0 +1,48 @@
+---
+interface Props {
+    anchor?: 'top' | 'bottom',
+    size?: 'full' | 'few',
+    height?: string,
+}
+import svgFull from "../images/waves.svg?raw";
+import svgFew from "../images/waves-few.svg?raw";
+const svg = Astro.props.size === 'few' ? svgFew : svgFull;
+---
+<span class:list={[Astro.props.anchor ?? 'block', 'waves']}><Fragment set:html={svg} /></span>
+<script>
+    // const topWaves = document.querySelector('span.waves.top') as HTMLElement;
+    // document.addEventListener('scroll', e => {
+    //     topWaves.style.top = `-${window.scrollY / 5}px`;
+    // });
+</script>
+<style lang="scss" define:vars={{ height: Astro.props.height ?? '65rem' }}>
+    span {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: var(--height);
+        z-index: -2;
+        & :global(svg) {
+            position: absolute;
+            width: 100%;
+            height: var(--height);
+        }
+    }
+    span.block {
+        position: relative;
+        width: calc(100% + var(--page-margin) * 2);
+        height: 0px;
+        margin-top: calc(5rem - var(--height));
+        & :global(svg) {
+		    background: linear-gradient(to top, var(--background-900), var(--background-900) 95%, transparent);
+        }
+    }
+    span.top {
+        top: 0px;
+        & :global(svg) {
+            rotate: 180deg;
+        }
+    }
+    span.bottom {
+    }
+</style>

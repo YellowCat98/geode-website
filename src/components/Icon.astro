@@ -1,0 +1,30 @@
+---
+import { Icon as AstroIcon } from 'astro-icon/components';
+const icons = {
+    error:    'error',
+    twitter:  'mdi:twitter',
+    discord:  'simple-icons:discord',
+    docs:     'mdi:file-document',
+    github:   'mdi:github',
+    download: 'mdi:download',
+    browse:   'mdi:database-search',
+    gd:       'gd-logo',
+    examples: 'mdi:text-search',
+    graph:    'mdi:graph-line',
+    windows:  'mdi:microsoft-windows',
+    mac:      'mdi:apple',
+    android:  'mdi:android',
+    ios:      'mdi:apple-ios',
+    copyright:'mdi:copyright',
+};
+const sizes = {
+    small: 18,
+    normal: 25,
+    big: 35,
+};
+interface Props {
+    type: keyof typeof icons,
+    size?: keyof typeof sizes,
+}
+---
+<AstroIcon name={icons[Astro.props.type]} size={sizes[Astro.props.size ?? 'normal']}/>

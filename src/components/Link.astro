@@ -1,0 +1,26 @@
+---
+import '../styles/theme.css';
+import { prefixURL } from '../URLPrefixer';
+interface Props {
+    href: string,
+    style?: 'black',
+}
+---
+<a href={prefixURL(Astro.props.href ?? '')} class={Astro.props.style}><slot/></a><style lang="scss">
+    a {
+        color: var(--accent-300);
+        text-decoration: underline;
+        transition: color 0.15s;
+        &:hover {
+            color: var(--accent-50);
+        }
+        &.black {
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--accent-950);
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+</style>

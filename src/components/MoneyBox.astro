@@ -1,0 +1,49 @@
+---
+interface Props {
+    num: number,
+}
+---
+<div data-num={Astro.props.num} class="moneybox"><slot></slot></div>
+<script>
+    import { CountUp } from 'countup.js';
+    
+    document.querySelectorAll('.moneybox').forEach(div => {
+        const countup = new CountUp(div.querySelector('number-here') as HTMLElement, 0);
+        div.addEventListener('geode-shown', _ => {
+            countup.update(div.getAttribute('data-num') ?? '0');
+            countup.start();
+        });
+        div.addEventListener('geode-hidden', _ => {
+            countup.update(0);
+            countup.start();
+        });
+    });
+</script>
+<style define:vars={{ 'num-width': `calc(${Astro.props.num.toString().length} * 1ch)` }}>
+    div {
+        border: .15rem color-mix(in srgb, var(--background-300) 50%, transparent) solid;
+        border-radius: .5rem;
+
+        background-color: color-mix(in srgb, var(--background-500) 20%, transparent);
+        color: var(--text-100);
+        font-size: 1.1em;
+
+        padding: .65rem;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: .25em;
+    }
+    div :global(svg) {
+        opacity: 50%;
+        color: var(--secondary-300);
+    }
+    div :global(number-here) {
+        color: var(--primary-300);
+        font-weight: 500;
+        font-style: normal;
+        width: var(--num-width);
+        text-align: center;
+    }
+</style>

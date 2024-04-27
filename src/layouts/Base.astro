@@ -1,0 +1,29 @@
+---
+import '../styles/theme.css';
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Geode - Mods for Geometry Dash</title>
+	</head>
+	<body>
+        <slot></slot>
+	</body>
+</html>
+
+<style>
+	body {
+		padding: 0;
+		margin: var(--page-margin);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background: linear-gradient(to bottom, var(--background-700), var(--background-900));
+        gap: var(--gap-large);
+		font-family: var(--font-body);
+	}
+</style>

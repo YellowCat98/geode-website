@@ -1,0 +1,63 @@
+---
+import stripIndent from 'strip-indent';
+import hljs from 'highlight.js';
+import cpp from 'highlight.js/lib/languages/cpp.js';
+
+interface Props {
+    code: string,
+}
+
+hljs.registerLanguage('cpp', cpp);
+const code = hljs.highlight(stripIndent(Astro.props.code).trim(), { language: 'cpp' }).value;
+---
+<pre><code set:html={code}></code></pre>
+<style is:global>
+    pre {
+        background-color: var(--background-950);
+        padding: 1px;
+        border-radius: calc(.5rem + 1px);
+        box-shadow: 0px 0px 7rem color-mix(in srgb, var(--primary-500) 10%, transparent);
+    }
+    code {
+        color: var(--text-50);
+        display: block;
+        background-color: var(--background-950);
+        border: 1px color-mix(in srgb, var(--background-300) 50%, transparent) solid;
+        padding: 1rem;
+        border-radius: .5rem;
+        tab-size: 4;
+    }
+    .hljs, .hljs-subst {
+        color: var(--text-50);
+    }
+    .hljs-meta {
+        color: var(--accent-alt-300);
+    }
+    .hljs-keyword {
+        color: var(--primary-300);
+    }
+    .hljs-type {
+        color: var(--accent-300);
+    }
+    .hljs-title.function {
+        color: var(--secondary-300);
+    }
+    .hljs-symbol {
+        color: var(--text-300);
+    }
+    .hljs-punctuation {
+        color: var(--text-300);
+    }
+    .hljs-built_in {
+        color: var(--secondary-300);
+    }
+    .hljs-literal {
+        color: var(--secondary-500);
+    }
+    .hljs-string {
+        color: var(--accent-alt-300);
+    }
+    .hljs-comment {
+        opacity: 50%;
+    }
+</style>

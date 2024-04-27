@@ -1,0 +1,56 @@
+---
+import '../styles/theme.css';
+import { prefixURL } from '../URLPrefixer';
+interface Props {
+    href: string,
+    type?: string,
+}
+---
+<a href={prefixURL(Astro.props.href ?? '')} class:list={[Astro.props.type]}><slot/></a>
+<style>
+    a {
+        font-family: var(--font-body);
+        text-decoration: none;
+        color: var(--text-color);
+        background-color: var(--fill-color);
+
+        border: .15rem var(--color) solid;
+        border-radius: .15rem;
+
+        display: flex;
+        padding: .6rem;
+        align-items: center;
+        justify-content: center;
+        gap: .6rem;
+        
+        transition: all var(--transition-duration);
+    }
+    a, a.hollow {
+        --fill-color: rgba(0, 0, 0, 0);
+        --text-color: var(--color);
+    }
+    a.filled {
+        --fill-color: var(--color);
+        --text-color: var(--text-950);
+
+        box-shadow: 0px .1rem .5rem rgba(0, 0, 0, 25%);
+    }
+    a, a.secondary {
+        --color: var(--secondary-300);
+        --hover: var(--secondary-50);
+    }
+    a.primary {
+        --color: var(--primary-300);
+        --hover: var(--primary-50);
+    }
+    a.primary-black {
+        --color: var(--primary-950);
+        --hover: var(--primary-50);
+        --text-color: var(--primary-300);
+    }
+    a:hover {
+        color: var(--text-950);
+        border-color: var(--hover);
+        background-color: var(--hover);
+    }
+</style>

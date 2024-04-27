@@ -1,0 +1,29 @@
+---
+import filledLogo from '../images/geode-logo.svg?raw';
+import plainLogo from '../images/geode-logo-plain.svg?raw';
+import plainLogoMono from '../images/geode-logo-plain-mono.svg?raw';
+interface Props {
+    plain?: boolean,
+    mono?: boolean,
+}
+const logo = Astro.props.plain ? 
+    (Astro.props.mono ? plainLogoMono : plainLogo) : 
+    filledLogo;
+---
+
+<div class="geode-logo">
+    <Fragment set:html={logo}/>
+</div>
+
+<style is:global>
+    .geode-logo {
+        display: flex;
+        height: var(--font-size-title);
+        fill: var(--text-50);
+    }
+    .geode-logo > svg {
+        width: 100%;
+        height: 100%;
+        filter: drop-shadow(0px 0px 3rem var(--primary-700));
+    }
+</style>

@@ -1,0 +1,12 @@
+---
+interface Props {
+    size?: '0' | 'small' | 'normal' | 'big' | 'immense';
+}
+---
+<span></span>
+<style define:vars={{ size: `var(--gap-${Astro.props.size ?? 'normal'})` }}>
+    span {
+        width: var(--size);
+        height: var(--size);
+    }
+</style>

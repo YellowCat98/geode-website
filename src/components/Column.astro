@@ -1,0 +1,15 @@
+---
+import '../styles/theme.css';
+interface Props {
+    gap?: 'small' | 'normal' | 'large' | 'immense';
+}
+---
+<div><slot></slot></div>
+<style define:vars={{ gap: `var(--gap-${Astro.props.gap ?? 'normal'})` }}>
+    div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--gap);
+    }
+</style>
