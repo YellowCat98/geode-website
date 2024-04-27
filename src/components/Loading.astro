@@ -1,5 +1,6 @@
 ---
 import Column from './Column.astro'
+import LoadingCircle from './LoadingCircle.astro';
 import Paragraph from './Paragraph.astro'
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
 <div class="lazy" id={Astro.props.id}>
     <article id="content"><slot></slot></article>
     <Column id="spinner">
-        <span class="loader"></span>
+        <LoadingCircle/>
         <Paragraph>{Astro.props.loading}</Paragraph>
     </Column>
 </div>
@@ -32,23 +33,4 @@ interface Props {
     div.lazy.finished > :global(#spinner) {
         display: none;
     }
-    .loader {
-        width: 48px;
-        height: 48px;
-        border: 5px solid var(--text-50);
-        border-bottom-color: transparent;
-        border-radius: 50%;
-        display: inline-block;
-        box-sizing: border-box;
-        animation: rotation 1s linear infinite;
-    }
-
-    @keyframes rotation {
-        0% {
-            transform: rotate(0deg);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
-    } 
 </style>
