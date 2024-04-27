@@ -1,1 +1,0 @@
-type FinishEventDetail = { [query: string]: (elem: Element) => void };

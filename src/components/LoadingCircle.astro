@@ -1,16 +1,28 @@
-<span class="loader"></span>
-<style>
-    .loader {
-        width: 48px;
-        height: 48px;
-        border: 5px solid var(--text-50);
+---
+interface Props {
+    size?: 'small' | 'normal';
+}
+---
+<span class:list={["spinner", Astro.props.size ?? 'normal']}></span>
+<style lang="scss">
+    .spinner {
+        border: 0px solid var(--text-50);
         border-bottom-color: transparent;
         border-radius: 50%;
         display: inline-block;
         box-sizing: border-box;
         animation: rotation 1s linear infinite;
+        &.small {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-width: .2rem;
+        }
+        &.normal {
+            width: 3rem;
+            height: 3rem;
+            border-width: .4rem;
+        }
     }
-
     @keyframes rotation {
         0% {
             transform: rotate(0deg);

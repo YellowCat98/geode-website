@@ -3,10 +3,11 @@ import '../styles/theme.css';
 interface Props {
     gap?: 'small' | 'normal' | 'large' | 'immense',
     wrap?: boolean,
+    id?: string,
 }
 ---
 
-<div><slot></slot></div>
+<div id={Astro.props.id}><slot></slot></div>
 <style define:vars={{ gap: `var(--gap-${Astro.props.gap ?? 'normal'})`, wrap: Astro.props.wrap ? 'wrap' : 'nowrap' }}>
     div {
         display: flex;

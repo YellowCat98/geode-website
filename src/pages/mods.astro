@@ -1,0 +1,52 @@
+---
+import Column from "../components/Column.astro";
+import Gap from "../components/Gap.astro";
+import Header from "../components/Header.astro";
+import Icon from "../components/Icon.astro";
+import Loading from "../components/Loading.astro";
+import Row from "../components/Row.astro";
+import Search from "../components/Search.astro";
+import SelectButton from "../components/SelectButton.astro";
+import Title from "../components/Title.astro";
+import Waves from "../components/Waves.astro";
+import Base from "../layouts/Base.astro";
+import { getTags, getIconForTag } from "../Server";
+---
+<Base>
+	<Waves anchor="top" height="38rem" push="14rem"/>
+    <Gap size="large"/>
+    <Title>Browse mods</Title>
+    <Search placeholder="Search mods...">
+        Platform
+        <Row wrap={true} gap="small">
+            <SelectButton><Icon type="windows" size="small"/>Windows</SelectButton>
+            <SelectButton><Icon type="mac" size="small"/>Mac</SelectButton>
+            <SelectButton><Icon type="android" size="small"/>Android (64-bit)</SelectButton>
+            <SelectButton><Icon type="android" size="small"/>Android (32-bit)</SelectButton>
+            <SelectButton><Icon type="mac" size="small"/>iOS</SelectButton>
+        </Row>
+        Sorting
+        <Row wrap={true} gap="small">
+            <SelectButton><Icon type="download" size="small"/>Most Downloaded</SelectButton>
+            <SelectButton><Icon type="time" size="small"/>Most Recent</SelectButton>
+            <SelectButton><Icon type="time-update" size="small"/>Recently Updated</SelectButton>
+        </Row>
+        Tags
+        <Row wrap={true} gap="small">{getTags().then(tags => tags.map(tag => (
+            <SelectButton><Icon type={getIconForTag(tag)} size="small"/>{
+                tag.charAt(0).toUpperCase() + tag.slice(1)
+            }</SelectButton>
+        )))}</Row>
+        Other
+        <Row wrap={true} gap="small">
+            <SelectButton><Icon type="featured" size="small"/>Featured Only</SelectButton>
+        </Row>
+    </Search>
+    <Gap size="immense"/>
+    <Gap size="immense"/>
+    <Gap size="immense"/>
+    <Gap size="immense"/>
+    <Gap size="immense"/>
+</Base>
+<script>
+</script>

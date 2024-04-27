@@ -2,22 +2,33 @@
 import Column from './Column.astro'
 import LoadingCircle from './LoadingCircle.astro';
 import Paragraph from './Paragraph.astro'
+import Row from './Row.astro';
 
 interface Props {
     id: string,
     loading: string,
+    sideways?: boolean,
+    size?: 'small' | 'normal',
 }
 ---
 <div class="lazy" id={Astro.props.id}>
     <article id="content"><slot></slot></article>
-    <Column id="spinner">
-        <LoadingCircle/>
-        <Paragraph>{Astro.props.loading}</Paragraph>
-    </Column>
+    {Astro.props.sideways ? 
+        <Row id="spinner" gap={Astro.props.size}>
+            <LoadingCircle size={Astro.props.size}/>
+            <Paragraph>{Astro.props.loading}</Paragraph>
+        </Row> :
+        <Column id="spinner" gap={Astro.props.size}>
+            <LoadingCircle size={Astro.props.size}/>
+            <Paragraph>{Astro.props.loading}</Paragraph>
+        </Column>
+    }
 </div>
 <script>
+import { finishEventID, type FinishEventDetail } from "../LoadingEvent";
+
     document.querySelectorAll('.lazy').forEach(lazy => {
-        lazy.addEventListener('loading-finish', e => {
+        lazy.addEventListener(finishEventID, e => {
             const detail = (e as CustomEvent).detail as FinishEventDetail;
             for (const [query, transform] of Object.entries(detail)) {
                 lazy.querySelectorAll(query).forEach(e => transform(e));

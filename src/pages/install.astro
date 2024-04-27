@@ -155,6 +155,8 @@ import Loading from "../components/Loading.astro";
 <script>
     /// <reference types="user-agent-data-types" />
 
+import { createLoadingFinishEvent, type FinishEventDetail } from "../LoadingEvent";
+
     type DetectedPlatform = 'windows' | 'mac' | 'android' | 'ios';
     const platform = (navigator?.userAgentData?.platform ?? navigator?.platform ?? '').toLowerCase();
     let detectedPlatform: DetectedPlatform | undefined;
@@ -176,23 +178,21 @@ import Loading from "../components/Loading.astro";
     // todo: when server endpoint for getting latest version is implemented, use fetch() to get that
 
     setTimeout(() => {
-        installLoad.dispatchEvent(new CustomEvent('loading-finish', {
-            detail: {
-                '#latest-version': ver => {
-                    (ver as HTMLElement).innerText = 'yippee';
-                },
-                '[id*="install-"]': btn => {
-                    if (detectedPlatform) {
-                        if (!btn.getAttribute('id')?.includes(detectedPlatform)) {
-                            btn.classList.add('hidden');
-                        }
+        installLoad.dispatchEvent(createLoadingFinishEvent({
+            '#latest-version': ver => {
+                (ver as HTMLElement).innerText = 'yippee';
+            },
+            '[id*="install-"]': btn => {
+                if (detectedPlatform) {
+                    if (!btn.getAttribute('id')?.includes(detectedPlatform)) {
+                        btn.classList.add('hidden');
                     }
-                },
-                '#other-platforms': list => {
-                    list.classList.toggle('hidden', !detectedPlatform);
-                },
-            } as FinishEventDetail
-        }))
+                }
+            },
+            '#other-platforms': list => {
+                list.classList.toggle('hidden', !detectedPlatform);
+            },
+        }));
     }, 2000);
 </script>
 

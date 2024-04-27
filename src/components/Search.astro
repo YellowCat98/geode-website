@@ -1,0 +1,106 @@
+---
+import Icon from './Icon.astro'
+
+interface Props {
+    placeholder: string
+}
+---
+<div class="search">
+    <div class="input">
+        <Icon type="search"/>
+        <input placeholder={Astro.props.placeholder}>
+        {Astro.slots.has('default') && <button class="filter-button"><Icon type="filter"/></button>}
+    </div>
+    <div class="filters">
+        <slot></slot>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('.search').forEach(search => {
+        search.querySelector('.filter-button')?.addEventListener('click', () => {
+            search.classList.toggle('open');
+        });
+    });
+</script>
+<style lang="scss">
+    div.search {
+        display: flex;
+        flex-direction: column;
+        border-radius: 9999px;
+        align-items: stretch;
+        background-color: var(--background-950);
+        color: var(--text-300);
+        width: min(60ch, 90vw);
+
+        & > .filters {
+            display: none;
+            grid-template-rows: min-content 1fr;
+            gap: .5rem;
+            align-items: center;
+            font-size: 0.9em;
+            padding: 1rem;
+
+            opacity: 0%;
+            transition-property: opacity;
+            transition-duration: var(--transition-duration);
+        }
+        & > .input {
+            display: flex;
+            align-items: center;
+            
+            color: var(--text-50);
+            font-family: var(--font-body);
+
+            & > :global(svg) {
+                margin-left: 1rem;
+                opacity: 50%;
+            }
+            & > input {
+                background-color: transparent;
+                padding: 1rem;
+                flex-grow: 1;
+                border: none;
+                outline: none;
+                color: var(--text-50);
+                
+                &::placeholder {
+                    font-family: var(--font-body);
+                    color: var(--text-50);
+                    opacity: 50%;
+                }
+            }
+            & > .filter-button {
+                background-color: transparent;
+                border: none;
+                outline: none;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                color: var(--text-50);
+                padding: .5rem;
+                margin-right: .25rem;
+                border-radius: 9999px;
+                transition: background-color var(--transition-duration);
+                
+                &:hover {
+                    background-color: color-mix(in srgb, var(--text-50) 25%, transparent);
+                }
+                & > :global(svg:first-child) {
+                    opacity: 50%;
+                }
+            }
+        }
+        &.open {
+            border-radius: 1.5rem;
+            & > .filters {
+                display: grid;
+                opacity: 100%;
+            }
+            & > .input > .filter-button {
+                & > :global(svg:first-child) {
+                    opacity: 100%;
+                }
+            }
+        }
+    }
+</style>
